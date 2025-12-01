@@ -1,0 +1,22 @@
+workflows:
+  ios-build:
+    name: iOS Build for TBI Attendance
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+
+      - name: Build iOS IPA
+        script: |
+          flutter build ipa --release
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com

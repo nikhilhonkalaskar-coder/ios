@@ -1,0 +1,1 @@
+Replace this with your app launcher icon images (PNG). Put icons in appropriate densities under android/app/src/main/res and ios/Runner/Assets.xcassets when you generate full project.
