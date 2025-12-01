@@ -1,29 +1,31 @@
 workflows:
-  ios-build:
-    name: iOS Build for TBI Attendance
+  ios-unsigned-build:
+    name: Build iOS (Unsigned) – No Apple Account
+    max_build_duration: 60
     environment:
       flutter: stable
-      xcode: latest
       cocoapods: default
+      xcode: latest
+
     scripts:
-      - name: Flutter clean & pub get
+      - name: Get Flutter dependencies
         script: |
-          flutter clean
           flutter pub get
 
-      - name: Enable iOS platform (if missing)
+      - name: Build iOS (unsigned IPA)
         script: |
-          if [ ! -d "ios" ]; then
-            flutter create --platforms=ios .
-          fi
+          flutter build ios --release --no-codesign
+          mkdir -p build/ios/ipa
+          cd build/ios/iphoneos
+          # Create Payload folder
+          mkdir Payload
+          cp -r Runner.app Payload/
 
-      - name: Build iOS release IPA
-        script: |
-          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+          # Create unsigned IPA
+          zip -r ../ipa/tbi_attendance_unsigned.ipa Payload
 
     artifacts:
       - build/ios/ipa/*.ipa
-
     publishing:
       email:
         recipients:
