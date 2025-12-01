@@ -19,4 +19,5 @@ workflows:
     publishing:
       email:
         recipients:
-          - your-email@example.com
+          - nikhilhonkalaskar@gmail.com
+
